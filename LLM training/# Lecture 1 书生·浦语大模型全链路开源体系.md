@@ -1,6 +1,6 @@
 # Lecture 1 书生·浦语大模型全链路开源体系
 ## 1. 从模型到应用
-
+![Alt Text](LLM training/images/1-1.png)
 ## 2. 全链条开源开放体系
 
 ### 1）数据 
