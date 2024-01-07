@@ -1,4 +1,4 @@
-![2-3](https://github.com/xwhclaire/StudyPackages/assets/34467524/68033433-236c-4c09-99d5-ba1e506c3f41)# Assignment 2 轻松玩转书生·浦语大模型趣味Demo
+# Assignment 2 轻松玩转书生·浦语大模型趣味Demo
 ## 使用InternLM-Chat-7B模型生成300字的小故事
 - 小花和小金鱼的故事
 
