@@ -2,6 +2,7 @@
 ## 基础作业
 ### 环境配置
 - LangChain相关环境配置
+
 ![3-4](https://github.com/xwhclaire/StudyPackages/assets/34467524/d6f18019-4592-4afb-b113-22c87d1c7726)
 
 ![3-5](https://github.com/xwhclaire/StudyPackages/assets/34467524/ebce1208-2547-45f3-a687-c2ab73ae84a7)
