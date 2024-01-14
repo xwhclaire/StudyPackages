@@ -12,12 +12,13 @@
 | 受基座模型影响大 | 成本高昂 |
 | 单次回答知识有限 | 无法实时更新 |
 ### RAG 检索增强生成
-pic1
+
+![3-1](https://github.com/xwhclaire/StudyPackages/assets/34467524/d9474473-4909-4fc9-8f16-ebbb4d77a53a)
 
 ## LangChain简介
 为LLM提供通用接口而简化程序开发的开源工具
 ### 基于LangChain搭建RAG应用
-pic2
+![3-2](https://github.com/xwhclaire/StudyPackages/assets/34467524/631464e7-668e-465f-92e8-69a7ba6506a7)
 
 ## 构建向量数据库
 ### 基本步骤
@@ -36,7 +37,8 @@ pic2
   - LangChain提供检索问答链模版，可自动实现知识检索、Prompt嵌入、LLM问答全部流程
   - 检索问答链上游：接入InternLM的自定义LLM、已构建的向量数据库
   - 调用检索问答链
-  pic3
+  ![3-3](https://github.com/xwhclaire/StudyPackages/assets/34467524/02a04ad3-1991-4ff9-be34-87e0f676ef6e)
+
 - RAG方案优化建议
   - 性能核心受限因素：检索精度、Prompt性能
   - 优化策略：
