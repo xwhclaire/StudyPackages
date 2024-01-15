@@ -75,5 +75,6 @@
 - 修改配置文件 `internlm_chat_7b_qlora_oasst1_e3_copy.py` 将模型和训练数据均改为本地路径
 - 开始微调，开启deepspeed加速 `xtuner train ./internlm_chat_7b_qlora_oasst1_e3_copy.py --deepspeed deepspeed_zero2` 
   - 训练后的路径
-  pic13
+    
+    ![4-13](https://github.com/xwhclaire/StudyPackages/assets/34467524/97552d71-3ffd-4519-93a2-ddecde9565c7)
 - 
