@@ -77,4 +77,12 @@
   - 训练后的路径
     
     ![4-13](https://github.com/xwhclaire/StudyPackages/assets/34467524/97552d71-3ffd-4519-93a2-ddecde9565c7)
+  - 生成 Adapter 文件
+
+
+### 补充内容
+- `tmux`命令中断ssh连接，不中断微调工作
+    `tmux new -s finetuned` 在后台进行微调工作
+    `tmux attach -t finetune` 重新回到后台进行操作
+  
 - 
