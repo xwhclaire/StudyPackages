@@ -50,7 +50,8 @@ LLDeploy是LLM在英伟达设备上部署的全流程解决方案。包括模型
     继续拉取请求填满空位
   2. 有状态的推理
     无状态 vs 有状态
-![5-9](https://github.com/xwhclaire/StudyPackages/assets/34467524/95b4e912-b771-44d4-8f73-cf64f02031ca)
+
+  ![5-9](https://github.com/xwhclaire/StudyPackages/assets/34467524/95b4e912-b771-44d4-8f73-cf64f02031ca)
 
        历史记录在推理侧缓存的过程：
   
