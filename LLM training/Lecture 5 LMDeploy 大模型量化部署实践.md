@@ -1,32 +1,48 @@
 # Lecture 5 LMDeploy 大模型量化部署实践
 ## 大模型部署背景
 - 特点
-！[Alt text](5-1.jpg)
+
+![5-1](https://github.com/xwhclaire/StudyPackages/assets/34467524/bea42887-9aa8-41e4-ad43-0017d35e3902)
+
 - 部署挑战和部署方案
-![Alt text](5-2.jpg)
+
+![5-2](https://github.com/xwhclaire/StudyPackages/assets/34467524/bd1b7091-6f16-4c6d-93d0-016fdce24ee7)
 
 ## LMDeploy简介
 LLDeploy是LLM在英伟达设备上部署的全流程解决方案。包括模型轻量化、推理和服务。上层是Python，底层结构通过C++搭建。[项目地址](http://github.com/InternLM/Imdeploy)
-![Alt text](5-3.jpg)
+
+![5-3](https://github.com/xwhclaire/StudyPackages/assets/34467524/088f1d2d-b1e3-4b65-bad9-fc6ca5804f78)
+
 ### 推理性能：静态推理性能 VS 动态推理性能
-![Alt text](5-4.jpg)
+
+![5-4](https://github.com/xwhclaire/StudyPackages/assets/34467524/404b0532-e66e-41e8-bf05-4f538e1dd143)
+
 ### 核心功能
 - 量化
   降低显存，同样设备下可以容纳更多的并发及更大的长度
   量化效果对比明显：
-  ![Alt text](5-5.jpg)
+
+![5-5](https://github.com/xwhclaire/StudyPackages/assets/34467524/c37b1ab0-ab4f-4d6c-892e-e5f9c1c2eb10)
+
   - 为什么Weight Only的量化？
       降低显存占用、提升推理速度（大幅降低访存成本，提高Decoding的速度） 
     1. 计算密集（compute-bound）：推理的绝大部分时间消耗在数值计算上；针对计算密集场景，可以通过使用更快的硬件计算单元来提升计算速度，比如量化为W8A8使用INT8 Tensor Core来加速计算。
     2. 访存密集（memory-bound）：推理时，绝大部分时间消耗在数据读取上；针对访存密集型场景，一般是通过提高计算坊存比来提升性能。例如LLM，Decoder Only架构，推理时大部分时间消耗在逐Token生成阶段（Decoding阶段），典型的访存密集型场景。
-   ![Alt text](5-6.jpg)
+
+![5-6](https://github.com/xwhclaire/StudyPackages/assets/34467524/1dc65780-dcb5-4cbd-bbab-e86476e56296)
+
   -  如何做Weight Only量化？
       AWQ算法，量化为4bit模型。（相较于GPTQ算法，AWQ的推理速度更快，量化的时间更短）
       推理时，先把4bit权重，反量化回FP16（在Kernel内部进行，从Global Memory读取时仍是4bit），依旧使用FP16计算
-      ![Alt text](5-7.jpg)
+
+![5-7](https://github.com/xwhclaire/StudyPackages/assets/34467524/da243ac7-51ab-4e60-95eb-3a2bdcc6efdb)
+
 
 - 推理引擎TurboMind
-  ![Alt text](5-8.jpg)
+
+![5-8](https://github.com/xwhclaire/StudyPackages/assets/34467524/540b863b-c33f-47fe-87f9-a2bf0f1542d4)
+
+
   1. 持续批处理：
     推理请求首先加入到请求队列中；
     若batch中有空闲槽位，从队列拉去请求，尽量填满空闲槽位。若无，继续对当前batch中的请求进行forward；
@@ -34,17 +50,24 @@ LLDeploy是LLM在英伟达设备上部署的全流程解决方案。包括模型
     继续拉取请求填满空位
   2. 有状态的推理
     无状态 vs 有状态
-    ![Alt text](5-9.jpg)
-    历史记录在推理侧缓存的过程：
-    ![Alt text](5-10.jpg)
+![5-9](https://github.com/xwhclaire/StudyPackages/assets/34467524/95b4e912-b771-44d4-8f73-cf64f02031ca)
+
+       历史记录在推理侧缓存的过程：
+  
+  ![5-10](https://github.com/xwhclaire/StudyPackages/assets/34467524/e004b95b-2aab-4091-ba7a-682bc7922763)
+
   3. Blocked k/v cache
     状态迁移：
-    ![Alt text](5-11.jpg)
-    Free：未被任何序列占用
-    Active：被正在推理的序列占用
-    Cache：被缓存中的序列占用
+
+   ![5-11](https://github.com/xwhclaire/StudyPackages/assets/34467524/e480dbd9-2d02-46b8-b85c-a7599170ecdc)
+
+  Free：未被任何序列占用
+  Active：被正在推理的序列占用
+  Cache：被缓存中的序列占用
     过程展示：
-    ![Alt text](5-12.jpg)
+
+  ![5-12](https://github.com/xwhclaire/StudyPackages/assets/34467524/c52e9be5-0177-4503-be85-b127a313b7d4)
+
   4. 高性能 cuda kernel
     四个方面优化：
     - Falsh attention 2
@@ -59,9 +82,13 @@ LLDeploy是LLM在英伟达设备上部署的全流程解决方案。包括模型
 ## 动手实践环节
 ### 安装
 - 安装lmdeploy，完成环境部署
-![Alt text](image-1.png)
+
+![image](https://github.com/xwhclaire/StudyPackages/assets/34467524/a386656f-8b18-449d-a6f6-8249f3c68cfe)
+
 ### 部署
-![Alt text](image-2.png)
+
+![image](https://github.com/xwhclaire/StudyPackages/assets/34467524/8f087767-9297-4d26-a30c-39216a226217)
+
 模型推理/服务：主要提供模型本身的推理，一般来说可以和具体业务解耦，专注模型推理本身性能的优化。可以以模块、API等多种方式提供。
 Client：可以理解为前端，与用户交互的地方。
 API Server：一般作为前端的后端，提供与产品和服务相关的数据和功能支持。
@@ -73,14 +100,20 @@ API Server：一般作为前端的后端，提供与产品和服务相关的数�
     - 可以直接启动本地的 Huggingface 模型
   - 离线转换
     - Tensor并行
-    ![Alt text](image-3.png)
+ 
+    ![image](https://github.com/xwhclaire/StudyPackages/assets/34467524/d1141052-a6ea-4a71-ac22-8c595de26cf4)
+
     <p align="center">列并行<p>
-    ![Alt text](image-4.png)
+ 
+    ![image](https://github.com/xwhclaire/StudyPackages/assets/34467524/01585278-f8b5-4b33-8b58-4cd03177fd62)
+
     <p align="center">行并行<p>
     把一个大的张量（参数）分到多张卡上，分别计算各部分的结果，然后再同步汇总。
 - TurboMind 推理+命令本地对话
    先尝试本地对话（Bash Local Chat），下面用（Local Chat 表示）在这里其实是跳过 API Server 直接调用 TurboMind。简单来说，就是命令行代码直接执行 TurboMind。
-   ![Alt text](image-5.png)
+
+   ![image](https://github.com/xwhclaire/StudyPackages/assets/34467524/ebb41499-76fb-4be9-962a-323fa9b97456)
+
 - TurboMind推理 + API服务
   ”模型推理/服务“目前提供了 Turbomind 和 TritonServer 两种服务化方式。此时，Server 是 TurboMind 或 TritonServer，API Server 可以提供对外的 API 服务。
 - Gradio网页Demo演示
