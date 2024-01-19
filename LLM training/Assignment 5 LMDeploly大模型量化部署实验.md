@@ -1,15 +1,24 @@
 # Assignment 5 LMDeploly大模型量化部署实验
 ## 基础作业
 - 使用LMDeploy以本地对话部署InternLm-Chat-7B生成的300字小故事
-  ![Alt text](image.png)
+
+  ![image](https://github.com/xwhclaire/StudyPackages/assets/34467524/a68b2d3f-e3d8-44f6-95e6-a9bccbb86dfa)
+
 - 以网页Gradio生成的
   - 没有API Server，TurboMind直接与Gradio通信（TurboMind推理作为后端）
-  ![Alt text](image-1.png)
+
+  ![image](https://github.com/xwhclaire/StudyPackages/assets/34467524/c6ed3bc0-c81f-47d3-9f58-2e61b7e3858c)
+
   - Gradio + API Server，Gradio为Client（TurboMind服务作为后端）
   终端界面
-  ![Alt text](image-2.png)
+  
+  ![image](https://github.com/xwhclaire/StudyPackages/assets/34467524/801a5f02-1e38-4730-83cd-f8e8d23f2bfb)
+
+
   故事生成
-  ![Alt text](image-3.png)
+
+  ![image](https://github.com/xwhclaire/StudyPackages/assets/34467524/f78cb444-0319-4b30-9fac-dac4e7e30181)
+
 
 ## 进阶作业 
 pending...
