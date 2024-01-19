@@ -24,14 +24,14 @@ LLDeploy是LLM在英伟达设备上部署的全流程解决方案。包括模型
 
 ![5-5](https://github.com/xwhclaire/StudyPackages/assets/34467524/c37b1ab0-ab4f-4d6c-892e-e5f9c1c2eb10)
 
-  - 为什么Weight Only的量化？
+  - 为什么Weight Only的量化？<br>
       降低显存占用、提升推理速度（大幅降低访存成本，提高Decoding的速度） 
     1. 计算密集（compute-bound）：推理的绝大部分时间消耗在数值计算上；针对计算密集场景，可以通过使用更快的硬件计算单元来提升计算速度，比如量化为W8A8使用INT8 Tensor Core来加速计算。
     2. 访存密集（memory-bound）：推理时，绝大部分时间消耗在数据读取上；针对访存密集型场景，一般是通过提高计算坊存比来提升性能。例如LLM，Decoder Only架构，推理时大部分时间消耗在逐Token生成阶段（Decoding阶段），典型的访存密集型场景。
 
 ![5-6](https://github.com/xwhclaire/StudyPackages/assets/34467524/1dc65780-dcb5-4cbd-bbab-e86476e56296)
 
-  -  如何做Weight Only量化？
+  -  如何做Weight Only量化？<br>
       AWQ算法，量化为4bit模型。（相较于GPTQ算法，AWQ的推理速度更快，量化的时间更短）
       推理时，先把4bit权重，反量化回FP16（在Kernel内部进行，从Global Memory读取时仍是4bit），依旧使用FP16计算
 
@@ -43,12 +43,12 @@ LLDeploy是LLM在英伟达设备上部署的全流程解决方案。包括模型
 ![5-8](https://github.com/xwhclaire/StudyPackages/assets/34467524/540b863b-c33f-47fe-87f9-a2bf0f1542d4)
 
 
-  1. 持续批处理：
+  1. 持续批处理：<br>
     推理请求首先加入到请求队列中；
     若batch中有空闲槽位，从队列拉去请求，尽量填满空闲槽位。若无，继续对当前batch中的请求进行forward；
     batch每forward完一次，判断是否有request推理结束，结束的request，发送结果，释放槽位；
     继续拉取请求填满空位
-  2. 有状态的推理
+  2. 有状态的推理<br>
     无状态 vs 有状态
 
   ![5-9](https://github.com/xwhclaire/StudyPackages/assets/34467524/95b4e912-b771-44d4-8f73-cf64f02031ca)
@@ -57,14 +57,14 @@ LLDeploy是LLM在英伟达设备上部署的全流程解决方案。包括模型
   
   ![5-10](https://github.com/xwhclaire/StudyPackages/assets/34467524/e004b95b-2aab-4091-ba7a-682bc7922763)
 
-  3. Blocked k/v cache
+  3. Blocked k/v cache<br>
     状态迁移：
 
    ![5-11](https://github.com/xwhclaire/StudyPackages/assets/34467524/e480dbd9-2d02-46b8-b85c-a7599170ecdc)
 
-  Free：未被任何序列占用
-  Active：被正在推理的序列占用
-  Cache：被缓存中的序列占用
+  Free：未被任何序列占用<br>
+  Active：被正在推理的序列占用<br>
+  Cache：被缓存中的序列占用<br>
     过程展示：
 
   ![5-12](https://github.com/xwhclaire/StudyPackages/assets/34467524/c52e9be5-0177-4503-be85-b127a313b7d4)
